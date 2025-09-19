@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 // Importa suas rotas de usuário
-import userRoutes from "./src/routes/CadastroUsuario.js"; 
+import userRoutes from "./src/routes/usuarios.js"; 
 app.use("/users", userRoutes);
 
 // Rota inicial (teste)

@@ -2,6 +2,30 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
+// src/services/api.js (frontend)
+const API_URL = "http://localhost:3000"; // endereço do backend
+
+export async function createUser(data) {
+  const res = await fetch(`${API_URL}/usuarios`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  return res.json();
+}
+
+export async function getUsers() {
+  const res = await fetch(`${API_URL}/users`);
+  return res.json();
+}
+
+
+let users = []
+
+async function getUser(){
+  users = await api.get('/usuarios')
+}
+
 function Cadastro() {
   return (
     <div className="container">
