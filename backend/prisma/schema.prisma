@@ -24,3 +24,11 @@ model Doscente {
   email String
   telefone String
 }
+
+model Discente {
+  id Int @id @default(autoincrement())
+  name String
+  matricula Int @unique
+  email String
+  telefone String
+}
