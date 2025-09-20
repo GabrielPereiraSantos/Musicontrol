@@ -1,6 +1,7 @@
 // server.js
 import express from "express";
 import cors from "cors";
+import usuarios from "./src/routes/usuarios.js"
 
 const app = express();
 
@@ -9,8 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // Importa suas rotas de usuário
-import userRoutes from "./src/routes/usuarios.js"; 
-app.use("/users", userRoutes);
+app.use(usuarios)
 
 // Rota inicial (teste)
 app.get("/", (req, res) => {

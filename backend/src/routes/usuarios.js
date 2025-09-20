@@ -2,10 +2,7 @@ import express from 'express'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
-
 const app = express()
-
-const router = express.Router();
 
 app.use(express.json())
 
@@ -80,7 +77,7 @@ app.delete('/usuarios/:id', async (req, res) => {
 
 
 
-export default router;
+export default app;
 
 //senhasegura*123
 
