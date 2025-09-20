@@ -16,3 +16,11 @@ model User {
   siape     Int   @unique
   password  String
 }
+
+model Doscente {
+  id Int @id @default(autoincrement())
+  name String
+  siape Int @unique
+  email String
+  telefone String
+}
