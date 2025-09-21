@@ -23,6 +23,7 @@ model Doscente {
   siape Int @unique
   email String
   telefone String
+  liberado Boolean @default(false)
 }
 
 model Discente {
@@ -31,4 +32,5 @@ model Discente {
   matricula Int @unique
   email String
   telefone String
+  liberado  Boolean @default(false)
 }

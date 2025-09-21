@@ -8,9 +8,15 @@ const router = express.Router();
 // Criar Doscente
 router.post("/", async (req, res) => {
   try {
-    const { name, siape, email, telefone } = req.body;
+    const { name, siape, email, telefone, liberado } = req.body;
     const novo = await prisma.doscente.create({
-      data: { name, siape, email, telefone },
+      data: {
+        name,
+        siape,
+        email,
+        telefone,
+        liberado: liberado ?? false, // false por padrão
+      },
     });
     res.status(201).json(novo);
   } catch (err) {
@@ -19,10 +25,13 @@ router.post("/", async (req, res) => {
   }
 });
 
+
 // Listar todos os Doscentes
 router.get("/", async (req, res) => {
   try {
-    const lista = await prisma.doscente.findMany();
+    const lista = await prisma.doscente.findMany({
+      orderBy: { name: 'asc' } // opcional: ordena pelo nome
+    });
     res.status(200).json(lista);
   } catch (err) {
     console.error("GET /doscente error:", err);
@@ -43,18 +52,15 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+
 // Atualizar
 router.put("/:id", async (req, res) => {
   const id = parseInt(req.params.id, 10);
   try {
+    const { name, siape, email, telefone, liberado } = req.body;
     const atualizado = await prisma.doscente.update({
       where: { id },
-      data: {
-        name: req.body.name,
-        siape: req.body.siape,
-        email: req.body.email,
-        telefone: req.body.telefone,
-      },
+      data: { name, siape, email, telefone, liberado },
     });
     res.status(200).json(atualizado);
   } catch (err) {
@@ -62,6 +68,7 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({ error: "Erro ao atualizar doscente" });
   }
 });
+
 
 // Deletar
 router.delete("/:id", async (req, res) => {
