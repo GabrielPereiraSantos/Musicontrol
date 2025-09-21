@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
 
   try {
     // Busca o usuário pelo siape
-    const user = await prisma.usuario.findUnique({
+    const user = await prisma.user.findUnique({
       where: { siape }
     });
 

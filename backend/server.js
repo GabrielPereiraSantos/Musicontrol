@@ -14,7 +14,7 @@ app.use(express.json());
 app.use("/usuarios", usuarios);
 app.use("/doscente", doscente);
 app.use('/discente', discente);
-app.use("/Login", login);
+app.use("/login", login);
 
 app.get("/", (req, res) => res.json({ message: "Servidor rodando 🚀" }));
 
