@@ -3,7 +3,7 @@ import cors from "cors";
 import usuarios from "./src/routes/usuarios.js";
 import doscente from "./src/routes/doscente.js";
 import discente from './src/routes/discente.js';
-import login from './src/routes/Login.js';
+import login from './src/routes/login.js';
 
 const app = express();
 
