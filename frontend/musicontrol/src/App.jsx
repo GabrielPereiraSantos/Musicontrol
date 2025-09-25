@@ -5,6 +5,8 @@ import Dashboard from "./pages/Dashboard";
 import Patrimonio from "./pages/Patrimonio";
 import Relatorios from "./pages/Relatorios";
 import Acesso from "./pages/Acesso";
+import CadastrarDocente from "./pages/cadastrarDocente";
+import CadastrarDiscente from "./pages/cadastrarDiscente";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
       <Route path="/patrimonio" element={<Patrimonio />} />
       <Route path="/relatorios" element={<Relatorios />} />
       <Route path="/acesso" element={<Acesso />} />
+      <Route path="/cadastrarDocente" element={<CadastrarDocente />} />
+      <Route path="/cadastrarDiscente" element={<CadastrarDiscente />} />
     </Routes>
   );
 }

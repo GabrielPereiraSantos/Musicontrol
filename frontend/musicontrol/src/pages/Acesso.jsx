@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api.js";
 
 function Acesso() {
   const [docentes, setDocentes] = useState([]);
   const [discentes, setDiscentes] = useState([]);
+  const navigate = useNavigate(); // para redirecionamento
 
+  // Buscar docentes e discentes ao carregar a página
   useEffect(() => {
     async function fetchData() {
       try {
@@ -20,28 +22,12 @@ function Acesso() {
     fetchData();
   }, []);
 
-  const handleAddDocente = async () => {
-    const nome = prompt("Nome do docente:");
-    if (!nome) return;
-
-    try {
-      const novo = await api.addDocente({ name: nome });
-      setDocentes([...docentes, novo]);
-    } catch (err) {
-      console.error("Erro ao adicionar docente:", err);
-    }
+  const handleAddDocente = () => {
+    navigate("/cadastrarDocente");
   };
 
-  const handleAddDiscente = async () => {
-    const nome = prompt("Nome do discente:");
-    if (!nome) return;
-
-    try {
-      const novo = await api.addDiscente({ name: nome });
-      setDiscentes([...discentes, novo]);
-    } catch (err) {
-      console.error("Erro ao adicionar discente:", err);
-    }
+  const handleAddDiscente = () => {
+    navigate("/cadastrarDiscente");
   };
 
   return (
@@ -61,9 +47,11 @@ function Acesso() {
         >
           <h3>Docentes</h3>
           <ul>
-            {docentes.map((d) => (
-              <li key={d.id}>{d.name}</li>
-            ))}
+            {docentes.length > 0 ? (
+              docentes.map((d) => <li key={d.id}>{d.name}</li>)
+            ) : (
+              <li>Nenhum docente cadastrado</li>
+            )}
           </ul>
           <button onClick={handleAddDocente}>Adicionar Docente</button>
         </div>
@@ -79,9 +67,11 @@ function Acesso() {
         >
           <h3>Discentes</h3>
           <ul>
-            {discentes.map((d) => (
-              <li key={d.id}>{d.name}</li>
-            ))}
+            {discentes.length > 0 ? (
+              discentes.map((d) => <li key={d.id}>{d.name}</li>)
+            ) : (
+              <li>Nenhum discente cadastrado</li>
+            )}
           </ul>
           <button onClick={handleAddDiscente}>Adicionar Discente</button>
         </div>
