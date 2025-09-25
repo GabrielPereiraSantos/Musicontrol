@@ -34,3 +34,10 @@ model Discente {
   telefone String
   liberado  Boolean @default(false)
 }
+
+model Patrimonio {
+  id Int @id @default(autoincrement())
+  numero Int  @unique
+  name String
+  descricao String
+}
