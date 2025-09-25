@@ -30,12 +30,12 @@ const api = {
 
   // ---------------- DOCENTES -----------------
   getDocentes: async () => {
-    const res = await fetch(`${API_URL}/doscentes`);
+    const res = await fetch(`${API_URL}/docente`);
     return res.json();
   },
 
   addDocente: async (data) => {
-    const res = await fetch(`${API_URL}/doscentes`, {
+    const res = await fetch(`${API_URL}/docente`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -45,12 +45,12 @@ const api = {
 
   // ---------------- DISCENTES -----------------
   getDiscentes: async () => {
-    const res = await fetch(`${API_URL}/discentes`);
+    const res = await fetch(`${API_URL}/discente`);
     return res.json();
   },
 
   addDiscente: async (data) => {
-    const res = await fetch(`${API_URL}/discentes`, {
+    const res = await fetch(`${API_URL}/discente`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

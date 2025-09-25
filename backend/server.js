@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import usuarios from "./src/routes/usuarios.js";
-import doscente from "./src/routes/doscente.js";
+import doscente from "./src/routes/docente.js";
 import discente from './src/routes/discente.js';
 import login from './src/routes/login.js';
 import patrimonio from "./src/routes/patrimonio.js";
@@ -13,7 +13,7 @@ app.use(express.json());
 
 // Rotas
 app.use("/usuarios", usuarios);
-app.use("/doscente", doscente);
+app.use("/docente", doscente);
 app.use('/discente', discente);
 app.use("/login", login);
 app.use("/patrimonio", patrimonio);
