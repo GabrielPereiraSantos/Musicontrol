@@ -1,12 +1,30 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import API from "../services/api";
 
 function Patrimonio() {
+  const [patrimonios, setPatrimonios] = useState([]);
+
+  useEffect(() => {
+    // Chama o backend
+    API.get("/patrimonio")
+      .then((response) => {
+        setPatrimonios(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar patrimônios:", error);
+      });
+  }, []);
+
   return (
-    <div className="page">
-      <h2>Patrimônios</h2>
-      <p>Aqui será exibida a lista de patrimônios cadastrados.</p>
-      <Link to="/dashboard">⬅ Voltar</Link>
+    <div>
+      <h1>Patrimônio da Sala de Música</h1>
+      <ul>
+        {patrimonios.map((item) => (
+          <li key={item.id}>
+            <strong>{item.nome}</strong> - {item.descricao} (Sala: {item.sala})
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
