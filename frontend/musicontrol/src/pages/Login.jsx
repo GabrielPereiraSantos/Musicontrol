@@ -1,8 +1,49 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 
+const API_URL = "http://localhost:3000"; // endereço do backend
+
+// Função para chamar o backend
+async function loginUser(data) {
+  const res = await fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    throw new Error("Siape ou senha incorretos");
+  }
+
+  return res.json();
+}
+
 function Login() {
+  const [form, setForm] = useState({ siape: "", password: "" });
+  const navigate = useNavigate(); // hook do react-router-dom
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await loginUser({
+        siape: parseInt(form.siape, 10), // converte para Int
+        password: form.password,
+      });
+
+      console.log("Login bem-sucedido:", response.user);
+      navigate("/dashboard"); // redireciona para Dashboard.jsx
+    } catch (err) {
+      console.error(err);
+      alert("Siape ou senha incorretos");
+    }
+  };
+
   return (
     <div className="container">
       <div className="left-panel">
@@ -12,10 +53,24 @@ function Login() {
       </div>
 
       <div className="right-panel">
-        <form className="form">
+        <form className="form" onSubmit={handleSubmit}>
           <h2>Login</h2>
-          <input type="text" placeholder="Usuário" required />
-          <input type="password" placeholder="Senha" required />
+          <input
+            type="text"
+            name="siape"
+            placeholder="SIAPE"
+            value={form.siape}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Senha"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
           <button type="submit">Entrar</button>
           <p>
             Não tem conta? <Link to="/cadastro">Cadastre-se</Link>

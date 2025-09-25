@@ -1,32 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
-// src/services/api.js (frontend)
 const API_URL = "http://localhost:3000"; // endereço do backend
 
-export async function createUser(data) {
+async function createUser(data) {
   const res = await fetch(`${API_URL}/usuarios`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
+
+  if (!res.ok) {
+    throw new Error("Erro ao cadastrar usuário");
+  }
   return res.json();
-}
-
-export async function getUsers() {
-  const res = await fetch(`${API_URL}/users`);
-  return res.json();
-}
-
-
-let users = []
-
-async function getUser(){
-  users = await api.get('/usuarios')
 }
 
 function Cadastro() {
+  const [form, setForm] = useState({
+    name: "",
+    siape: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (form.password !== form.confirmPassword) {
+      alert("As senhas não coincidem!");
+      return;
+    }
+
+    try {
+      const novoUsuario = await createUser({
+        name: form.name,
+        siape: form.siape,
+        password: form.password, // precisa ser exatamente igual ao backend
+      });
+
+      console.log("Usuário cadastrado:", novoUsuario);
+      alert("Cadastro realizado com sucesso!");
+      setForm({ name: "", siape: "", password: "", confirmPassword: "" }); // limpa o form
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao cadastrar usuário.");
+    }
+  };
+
   return (
     <div className="container">
       <div className="left-panel">
@@ -36,12 +62,40 @@ function Cadastro() {
       </div>
 
       <div className="right-panel">
-        <form className="form">
+        <form className="form" onSubmit={handleSubmit}>
           <h2>Cadastrar Usuário</h2>
-          <input type="text" placeholder="Nome Completo" required />
-          <input type="int" placeholder="SIAPE" required />
-          <input type="password" placeholder="Senha" required />
-          <input type="password" placeholder="Confirmar Senha" required />
+          <input
+            type="text"
+            name="name"
+            placeholder="Nome Completo"
+            value={form.name}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="siape"
+            placeholder="SIAPE"
+            value={form.siape}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Senha"
+            value={form.password}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirmar Senha"
+            value={form.confirmPassword}
+            onChange={handleChange}
+            required
+          />
           <button type="submit">Cadastrar</button>
 
           <p>

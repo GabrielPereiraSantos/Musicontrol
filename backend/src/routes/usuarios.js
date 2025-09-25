@@ -6,18 +6,26 @@ const prisma = new PrismaClient();
 const router = express.Router();
 
 // Criar usuário
+// src/routes/usuarios.js
 router.post('/', async (req, res) => {
-    try {
-        const { name, siape, password } = req.body;
-        const newUser = await prisma.user.create({
-            data: { name, siape, password }
-        });
-        res.status(201).json(newUser);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Erro ao criar usuário' });
-    }
+  try {
+    const { name, siape, password } = req.body;
+
+    const newUser = await prisma.user.create({
+      data: { 
+        name, 
+        siape: parseInt(siape, 10), // 👈 conversão para inteiro
+        password 
+      }
+    });
+
+    res.status(201).json(newUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao criar usuário' });
+  }
 });
+
 
 // Listar todos os usuários
 router.get('/', async (req, res) => {
