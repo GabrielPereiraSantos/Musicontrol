@@ -21,7 +21,7 @@ function Patrimonio() {
       <ul>
         {patrimonios.map((item) => (
           <li key={item.id}>
-            <strong>{item.nome}</strong> - {item.descricao} (Sala: {item.sala})
+            <strong>{item.nome}</strong> - {item.descricao} 
           </li>
         ))}
       </ul>

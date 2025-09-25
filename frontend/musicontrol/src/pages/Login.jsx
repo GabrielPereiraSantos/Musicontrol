@@ -21,7 +21,7 @@ async function loginUser(data) {
 
 function Login() {
   const [form, setForm] = useState({ siape: "", password: "" });
-  const navigate = useNavigate(); // hook do react-router-dom
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -37,7 +37,12 @@ function Login() {
       });
 
       console.log("Login bem-sucedido:", response.user);
-      navigate("/dashboard"); // redireciona para Dashboard.jsx
+
+      // Salva usuário no localStorage
+      localStorage.setItem("user", JSON.stringify(response.user));
+
+      // Redireciona para Dashboard
+      navigate("/dashboard");
     } catch (err) {
       console.error(err);
       alert("Siape ou senha incorretos");

@@ -1,10 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
+import express from 'express';
+import { PrismaClient } from '@prisma/client';
 
-// Para segurança, idealmente você deveria usar bcrypt para comparar senhas hash,
-// mas como você mencionou que a senha está como String simples, farei a comparação direta.
+const router = express.Router();
+const prisma = new PrismaClient();
 
 router.post('/', async (req, res) => {
   const { siape, password } = req.body;
@@ -14,22 +12,14 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    // Busca o usuário pelo siape
     const user = await prisma.user.findUnique({
-      where: { siape }
+      where: { siape: parseInt(siape, 10) } // converter para Int
     });
 
-    if (!user) {
+    if (!user || user.password !== password) {
       return res.status(401).json({ error: 'Siape ou senha incorretos.' });
     }
 
-    // Compara a senha recebida com a senha do banco
-    if (user.password !== password) {
-      return res.status(401).json({ error: 'Siape ou senha incorretos.' });
-    }
-
-    // Login bem-sucedido - aqui você pode gerar um token JWT ou retornar os dados do usuário
-    // Por simplicidade, retornarei o usuário sem a senha
     const { password: _, ...userWithoutPassword } = user;
 
     return res.json({ message: 'Login realizado com sucesso', user: userWithoutPassword });
