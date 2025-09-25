@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api.js";
 
 function Patrimonio() {
   const [patrimonios, setPatrimonios] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -25,7 +26,9 @@ function Patrimonio() {
         <ul>
           {patrimonios.map((p) => (
             <li key={p.id}>
-              {p.name} - {p.descricao || "Sem descrição"}
+              <strong>Número:</strong> {p.numero} |{" "}
+              <strong>Nome:</strong> {p.name} |{" "}
+              <strong>Descrição:</strong> {p.descricao}
             </li>
           ))}
         </ul>
@@ -33,6 +36,7 @@ function Patrimonio() {
         <p>Nenhum patrimônio cadastrado.</p>
       )}
 
+      <br />
       <Link to="/dashboard">⬅ Voltar</Link>
     </div>
   );
